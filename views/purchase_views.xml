@@ -34,6 +34,9 @@
                     groups="purchase.group_purchase_manager"
                     invisible="invoice_status != 'to invoice' or state not in ('purchase',)"/>
             </xpath>
+			 <xpath expr="//field[@name='currency_id']" position="after">
+          			<field name="tipo_cambio_othercurrency" />
+        		</xpath>
         </field>
     </record>
 </odoo>
