@@ -26,7 +26,9 @@
         <field name="arch" type="xml">
             <!-- En Odoo 19 no existe action_create_invoice en el form.
                  Insertamos nuestro botón después del último botón del header -->
-            <xpath expr="//button[@name='button_unlock']" position="after">
+            <!-- <xpath expr="//button[@name='button_unlock']" position="after"> -->
+            <xpath expr="//header/button[last()]" position="after">
+            <!-- <xpath expr="//header" position="inside"> -->
                 <button name="%(l10n_ar_purchase.action_view_purchase_advance_invoice)d"
                     string="Crear Factura"
                     type="action"

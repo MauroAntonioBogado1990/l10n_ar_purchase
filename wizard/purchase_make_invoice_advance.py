@@ -14,9 +14,25 @@ class PurchaseAdvanceInvoice(models.TransientModel):
     _description = "Purchases Advance Invoice"
 
 
+    # def create_invoices(self):
+    #     purchase_orders = self.env['purchase.order'].browse(self._context.get('active_ids', []))
+    #     purchase_orders._set_currency_invoice(self.currency_id, self.tipo_cambio)
+    #     purchase_orders.action_create_invoice()
+    #     return {'type': 'ir.actions.act_window_close'}
     def create_invoices(self):
         purchase_orders = self.env['purchase.order'].browse(self._context.get('active_ids', []))
+        
+        _logger.info('=== WIZARD create_invoices ===')
+        _logger.info('currency_id: %s', self.currency_id)
+        _logger.info('tipo_cambio: %s', self.tipo_cambio)
+        
         purchase_orders._set_currency_invoice(self.currency_id, self.tipo_cambio)
+        
+        for po in purchase_orders:
+            _logger.info('PO %s => currency_invoice_id: %s | tipo_cambio_othercurrency: %s',
+                po.name, po.currency_invoice_id.name, po.tipo_cambio_othercurrency)
+        
+        purchase_orders.flush_recordset()
         purchase_orders.action_create_invoice()
         return {'type': 'ir.actions.act_window_close'}
 
